@@ -1,0 +1,11 @@
+{
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }],
+	"env": {
+		"VITE_API_URL": "https://bug-lab-backend.onrender.com"
+	},
+	"build": {
+		"env": {
+			"VITE_API_URL": "https://bug-lab-backend.onrender.com"
+		}
+	}
+}
