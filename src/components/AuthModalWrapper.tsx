@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Modal from "./Modal"; 
-import { LoginForm } from "./LoginForm"; 
+import Modal from "./Modal";
+import LoginForm from "./LoginForm";
 
 const AuthModalWrapper: React.FC = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

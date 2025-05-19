@@ -8,8 +8,6 @@ interface UseToastReturn {
 
 const useToast = (): UseToastReturn => {
   const [toast, setToast] = useState<string>("");
-
-  // useCallback for stable reference
   const showToast = useCallback((msg: string) => {
     setToast(msg);
     setTimeout(() => setToast(""), 3000);

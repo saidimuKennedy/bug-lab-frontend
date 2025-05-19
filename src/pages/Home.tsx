@@ -19,11 +19,9 @@ const Home: React.FC = () => {
             Your central hub for bug management and scientific research
           </p>
           <div className="hero-buttons">
-            {/* Existing "Explore Bugs" Link */}
             <Link to="/bugs" className="hero-button primary">
               Explore Bugs
             </Link>
-            {/* Existing "Meet Scientists" Link */}
             <Link to="/scientists" className="hero-button secondary">
               Meet Scientists
             </Link>
@@ -45,8 +43,6 @@ const Home: React.FC = () => {
           <Link
             to="/bugs"
             className="card"
-            // Removed onClick={() => handleCardClick("Bugs Collection")} if handleCardClick is only for commented toast
-            // Keep onClick if handleCardClick does something else or for future use
             onClick={() => handleCardClick("Bugs Collection")}
           >
             <div className="card-icon">🔍</div>
@@ -63,7 +59,7 @@ const Home: React.FC = () => {
           <Link
             to="/scientists"
             className="card"
-             onClick={() => handleCardClick("Research Team")}
+            onClick={() => handleCardClick("Research Team")}
           >
             <div className="card-icon">👩‍🔬</div>
             <h2>Research Team</h2>
@@ -89,11 +85,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Removed the Modal component and LoginForm from here */}
-      {/* They are now rendered within the Navbar component */}
-
-      {/* The toast component is likely rendered in App.tsx or a main layout */}
     </div>
   );
 };

@@ -3,26 +3,30 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
-  element: React.ReactElement; // The component to render if authenticated
-  redirectTo?: string; // Optional redirect path if not authenticated
+  element: React.ReactElement;
+  redirectTo?: string;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   element,
   redirectTo = "/login",
 }) => {
-  const { isAuthenticated, loading } = useAuth(); // Assuming you have a useAuth hook
+  const { isAuthenticated, loading } = useAuth();
+
   if (loading) {
-    return <div>Loading...</div>; // Show a loading state while checking auth
+    return <div>Loading...</div>;
   }
+
   if (!isAuthenticated) {
-    // Redirect to login if not authenticated
-    return element;
+    console.log(
+      "ProtectedRoute: Not authenticated, redirecting to",
+      redirectTo
+    );
+    return <Navigate to={redirectTo} replace />;
   }
-  // If authenticated, render the protected component
-  // You can use a library like react-router-dom to handle redirection
-  // For example, using Navigate from react-router-dom:
-  return <Navigate to={redirectTo} replace />;
+
+  console.log("ProtectedRoute: Authenticated, rendering element");
+  return element;
 };
 
 export default ProtectedRoute;

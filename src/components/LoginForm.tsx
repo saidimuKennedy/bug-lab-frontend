@@ -1,15 +1,16 @@
-// src/components/LoginForm.tsx
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { useAuth } from "../context/AuthContext";
 import { type LoginCredentials } from "../context/AuthContext";
 
 interface LoginFormProps {
   onSuccess?: () => void;
-  // *** NEW: Prop to trigger switching to the signup form ***
   onSwitchToSignup?: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) => { // Destructure new prop
+const LoginForm: React.FC<LoginFormProps> = ({
+  onSuccess,
+  onSwitchToSignup,
+}) => {
   const [formData, setFormData] = useState<LoginCredentials>({
     email: "",
     password: "",
@@ -48,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) =>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <div>
-        <label htmlFor="login-email">Email:</label> {/* Use unique ID */}
+        <label htmlFor="login-email">Email:</label>
         <input
           type="email"
           id="login-email"
@@ -61,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) =>
       </div>
 
       <div>
-        <label htmlFor="login-password">Password:</label> {/* Use unique ID */}
+        <label htmlFor="login-password">Password:</label>
         <input
           type="password"
           id="login-password"
@@ -77,21 +78,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) =>
         {loading ? "Logging in..." : "Login"}
       </button>
 
-      {/* *** NEW: Button/Link to switch to Signup form *** */}
-      {onSwitchToSignup && ( // Only render if the prop is provided
-         <div style={{ textAlign: 'center', marginTop: '1rem' }}> {/* Add some spacing */}
-            <p>Don't have an account?</p>
-             {/* Use a button or a link styled as button/text */}
-            <button
-                type="button" // Important: This button does NOT submit the form
-                onClick={onSwitchToSignup} // Call the function passed from parent
-                style={{ background: 'none', border: 'none', color: '#3498db', cursor: 'pointer', textDecoration: 'underline', fontSize: '1rem' }} // Basic styling
-            >
-                Sign Up
-            </button>
-         </div>
+      {onSwitchToSignup && (
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+          <p>Don't have an account?</p>
+          <button
+            type="button"
+            onClick={onSwitchToSignup}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#3498db",
+              cursor: "pointer",
+              textDecoration: "underline",
+              fontSize: "1rem",
+            }}
+          >
+            Sign Up
+          </button>
+        </div>
       )}
-      {/* *** End NEW Button *** */}
     </form>
   );
 };

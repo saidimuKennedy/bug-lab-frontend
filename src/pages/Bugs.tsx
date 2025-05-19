@@ -23,7 +23,6 @@ interface Bug {
 }
 
 const Bugs: React.FC = () => {
-  // modal state tracking
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<BugFormData>({
     name: "",
@@ -35,22 +34,18 @@ const Bugs: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // toast
   const { toast, showToast } = useToast();
 
-  // edit modal
   const [isEditing, setIsEditing] = useState(false);
   const [currentBug, setCurrentBug] = useState<Bug | null>(null);
 
   useEffect(() => {
     fetchBugs();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
-  // handle the behavior of taking the value of the input fields,
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // getting the bugs from the server, async since it is a fetch request from db
 
   const fetchBugs = async (): Promise<void> => {
     try {
@@ -72,7 +67,6 @@ const Bugs: React.FC = () => {
     const errors = [];
     const bugTypes = ["air", "ground", "water"];
 
-    // Trim whitespace from input values
     const name = data.name?.trim();
     const type = data.type?.trim().toLowerCase();
     const strength = Number(data.strength);
@@ -101,7 +95,6 @@ const Bugs: React.FC = () => {
         return;
       }
 
-      // prepare data for the API, making sure strength is a number
       const bugDataToSend = {
         ...formData,
         strength: parseInt(formData.strength, 10),
@@ -119,12 +112,10 @@ const Bugs: React.FC = () => {
           `HTTP error! status: ${response.status}, body: ${errorBody}`
         );
       }
-      // use the toast
       showToast("Bug added!");
-      // clean up after adding the bug
       setIsModalOpen(false);
       setFormData({ name: "", strength: "", type: "" });
-      fetchBugs(); // go to the next operation, take the bugs now with the additional and render them on the client
+      fetchBugs();
     } catch (error: unknown) {
       console.error("Error adding bug: ", error);
       showToast(`Failed to add bug: ${error instanceof Error ? error.message : String(error)}`);
@@ -132,29 +123,20 @@ const Bugs: React.FC = () => {
   };
 
   const handleEditClick = (bug: Bug): void => {
-    // edit the bug, set the form data to the current bug data and open the modal
-
     setFormData({
       name: bug.name,
-      strength: bug.strength.toString(), // convert to string for input, so that it can be displayed in the input field
+      strength: bug.strength.toString(),
       type: bug.type,
     });
 
-    // set the current bug to the one that is being edited
-
     setCurrentBug(bug);
-
-    // tell the form to switch from add mode to edit mode and thus affect the button and form behavior
     setIsEditing(true);
-
-    // open the modal to edit the bug
     setIsModalOpen(true);
   };
 
   const handleUpdateBug = async (
     e: FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    // ensure current bug is not null before updating
     if (!currentBug) {
       showToast("No bug selected for update!");
       return;
@@ -178,8 +160,6 @@ const Bugs: React.FC = () => {
         body: JSON.stringify(bugDataToSend),
       });
 
-      // defensive check, whether the server did not error silently
-
       if (!response.ok) {
         const errorBody = await response.text();
         throw new Error(
@@ -187,13 +167,11 @@ const Bugs: React.FC = () => {
         );
       }
 
-      // code cleanup, close the modal and reset the form data
-
       setIsModalOpen(false);
       setIsEditing(false);
       setFormData({ name: "", strength: "", type: "" });
       setCurrentBug(null);
-      fetchBugs(); // Refresh the list
+      fetchBugs();
       showToast("Bug updated successfully!");
     } catch (error: unknown) {
       console.error("Update failed:", error);
