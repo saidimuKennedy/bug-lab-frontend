@@ -1,3 +1,6 @@
+/* src/styles/Navbar.css */
+
+/* --- Existing Navbar Styles --- */
 .navbar {
   position: sticky;
   top: 0;
@@ -60,6 +63,7 @@
   margin: 0 0.5rem;
 }
 
+/* --- Existing .nav-link Styles --- */
 .nav-link {
   display: inline-block;
   padding: 0.75rem 1rem;
@@ -93,37 +97,44 @@
   border-radius: 3px;
 }
 
-.mobile-icon {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 21px;
-  cursor: pointer;
-  z-index: 1001;
+/* --- NEW CSS RULES FOR BUTTONS WITH .nav-link CLASS --- */
+
+/* Target buttons that also have the nav-link class */
+button.nav-link {
+  /* Reset default button styles */
+  background: none;
+  border: none;
+  outline: none; /* Remove outline on focus if desired */
+  /* Ensure button inherits or explicitly matches nav-link's box model and text styles */
+  padding: 0.75rem 1rem; /* Match .nav-link padding */
+  margin: 0; /* Remove default margin */
+  font-family: inherit; /* Inherit font */
+  font-size: inherit; /* Inherit font size */
+  text-align: inherit; /* Inherit text alignment */
+  line-height: inherit; /* Inherit line height */
+  color: inherit; /* Inherit color */
+  text-decoration: none; /* Remove default text decoration */
+  cursor: pointer; /* Set cursor to pointer */
+  /* Ensure it behaves like a flex/grid item if needed */
+  display: inline-block; /* Match .nav-link display */
+  /* Remove any system default styles */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-.mobile-icon span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background: #fff;
-  border-radius: 3px;
-  transition: all 0.3s ease;
+/* Add hover/active styles specifically for button.nav-link if they don't inherit */
+/* These should ideally match the existing .nav-link:hover and .nav-link.active rules */
+button.nav-link:hover {
+   color: #fff; /* Match .nav-link:hover color */
+   background: rgba(255, 255, 255, 0.1); /* Match .nav-link:hover background */
 }
 
-.mobile-icon.active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
-}
+/* If you need an 'active' state for the button (e.g. clicked or current page if that logic applies), style it here */
+/* button.nav-link.active { ... } */
 
-.mobile-icon.active span:nth-child(2) {
-  opacity: 0;
-}
 
-.mobile-icon.active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-
+/* --- Existing Mobile Styles --- */
 @media screen and (max-width: 768px) {
   .mobile-icon {
     display: flex;
@@ -159,7 +170,21 @@
     width: 100%;
     border-radius: 0;
   }
-  
+
+   /* Adjust button.nav-link for mobile specifically */
+   button.nav-link {
+      display: block; /* Match mobile nav-link display */
+      padding: 1rem 2rem; /* Match mobile nav-link padding */
+      text-align: left;
+      width: 100%;
+      border-radius: 0;
+      /* Ensure no default button mobile styles interfere */
+      /* Reset mobile-specific default button styles if any */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+   }
+
   .nav-link.active::after {
     bottom: auto;
     top: 50%;
@@ -168,4 +193,7 @@
     width: 3px;
     height: 20px;
   }
+
+   /* If you have a mobile active state for buttons, style it here */
+  /* button.nav-link.active::after { ... } */
 }
